@@ -15,12 +15,14 @@ Terraform version 1.6.3
 # Architecture Diagram
 ```mermaid 
 graph TD
-    %% Main Subgraphs for layout
-    subgraph S_Dev ["DEVELOPER IDE"]
-        L_VS["VS Code (Developer IDE)"]
+    %% Global Theme Settings
+    %% This sets the background and line colors for dark mode
+    
+    subgraph S_Dev ["Developer IDE"]
+        L_VS["VS Code"]
     end
 
-    subgraph S_CICD ["CI/CD & INFRASTRUCTURE"]
+    subgraph S_CICD ["CI/CD & Infrastructure"]
         direction TB
 
         subgraph S_IaC ["IaC - Terraform Workflow"]
@@ -60,9 +62,9 @@ graph TD
             N_App_Sonar -- "Static Analysis" --> N_App_Maven
         end
 
-        subgraph S_Cloud ["AWS CLOUD DEPLOYMENT"]
+        subgraph S_Cloud ["AWS Cloud Deployment"]
             direction TB
-            N_Cloud_Infra["AWS Infrastructure"]:::cloud_base
+            N_Cloud_Infra["AWS Infrastructure"]:::orange
             
             subgraph S_VPC ["VPC Subnet"]
                 direction TB
@@ -73,14 +75,23 @@ graph TD
         end
     end
 
-    %% Inter-subgraph connections
+    %% Connections
     L_VS -- "Push Code" --> N_IaC_G
     L_VS -- "Push Code" --> N_App_G
     N_IaC_Apply --> N_Cloud_Infra
     N_App_Docker --> N_Cloud_ECR
     N_App_Helm --> N_Cloud_EKS
 
-    %% Styling
-    classDef highlight fill:#fff,stroke:#3b82f6,color:#000,font-weight:bold
-    classDef blue fill:#3b82f6,stroke:#1e3a8a,color:#fff
-    classDef cloud_base fill:#f97316,stroke:#c2410c,color:#fff
+    %% Style Definitions for Dark Theme
+    classDef default fill:#111827,stroke:#374151,color:#d1d5db,stroke-width:1px;
+    classDef highlight fill:#1f2937,stroke:#60a5fa,color:#fff,stroke-width:2px;
+    classDef blue fill:#2563eb,stroke:#60a5fa,color:#fff,font-weight:bold;
+    classDef orange fill:#7c2d12,stroke:#fb923c,color:#fff;
+    
+    %% Subgraph Box Styling
+    style S_Dev fill:#0f172a,stroke:#1e293b,color:#94a3b8
+    style S_CICD fill:#030712,stroke:#1f2937,color:#94a3b8
+    style S_IaC fill:#111827,stroke:#334155,color:#cbd5e1
+    style S_App fill:#111827,stroke:#334155,color:#cbd5e1
+    style S_Cloud fill:#1c1917,stroke:#44403c,color:#fde047
+    style S_VPC fill:#292524,stroke:#57534e,color:#fff
